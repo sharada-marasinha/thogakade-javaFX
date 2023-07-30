@@ -1,20 +1,65 @@
 package controller;
 
 import db.DBConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Customer;
 
+import java.net.URL;
 import java.sql.*;
+import java.util.ResourceBundle;
 
-public class CustomerController {
+public class CustomerController implements Initializable {
     public TextField txtId;
     public TextField txtName;
     public TextField txtAddress;
     public TextField txtSalary;
 
+    public TableView<Customer> fxTable;
+    public TableColumn<Customer,String> colId;
+    public TableColumn<Customer,String> colName;
+    public TableColumn<Customer,String> colAddress;
+    public TableColumn<Customer,Double> colSalary;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        String SQL="Select * From Customer";
+        ObservableList<Customer> list = FXCollections.observableArrayList();
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            Statement stm = connection.createStatement();
+            ResultSet rst = stm.executeQuery(SQL);
+
+            while(rst.next()){
+                Customer customer=new Customer(rst.getString("id"), rst.getString("name"), rst.getString("address"),rst.getDouble("salary"));
+                list.add(customer);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+       colId.setCellValueFactory(new PropertyValueFactory<Customer,String>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<Customer,String>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<Customer,String>("address"));
+       colSalary.setCellValueFactory(new PropertyValueFactory<Customer,Double>("salary"));
+        fxTable.setItems(list);
+        System.out.println("Hello");
+
+    }
+
     public void btnCancelAction(ActionEvent actionEvent) {
+
     }
 
     public void btnAddAction(ActionEvent actionEvent) {
@@ -67,5 +112,31 @@ public class CustomerController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void btnUpdateAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String SQL = "Update Customer set name=?, address=?, salary=? where id=?";
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement psTm = connection.prepareStatement(SQL);
+        psTm.setObject(1,txtName.getText());
+        psTm.setObject(2,txtAddress.getText());
+        psTm.setObject(3,txtSalary.getText());
+        psTm.setObject(4,txtId.getText());
+        int i = psTm.executeUpdate();
+
+        System.out.println(i>0?"Susess":"Fald");
+
+
+    }
+
+    public void btnDeleteAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        int i = DBConnection.getInstance().getConnection().createStatement().executeUpdate("Delete From Customer where id='" + txtId.getText() + "'");
+        System.out.println(i>0?"Susess":"Fald");
+    }
+
+
+    public void btnViewAction(ActionEvent actionEvent) {
+
+
     }
 }
