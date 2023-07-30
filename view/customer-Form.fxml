@@ -12,5 +12,6 @@
       <TextField fx:id="txtSalary" layoutX="63.0" layoutY="248.0" promptText="Salary" />
       <Button layoutX="508.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnCancelAction" text="Cancel" />
       <Button layoutX="441.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnAddAction" prefHeight="25.0" prefWidth="52.0" text="Add" />
+      <Button layoutX="373.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnSearchAction" text="Search" />
    </children>
 </AnchorPane>

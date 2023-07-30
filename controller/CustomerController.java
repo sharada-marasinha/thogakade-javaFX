@@ -6,9 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import model.Customer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class CustomerController {
     public TextField txtId;
@@ -48,5 +46,26 @@ public class CustomerController {
             e.printStackTrace();
         }
 
+    }
+
+    public void btnSearchAction(ActionEvent actionEvent) {
+        String SQL="Select * From Customer where id='"+txtId.getText()+"'";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            Statement stm = connection.createStatement();
+            ResultSet resultSet = stm.executeQuery(SQL);
+        if(resultSet.next()) {
+            Customer customer = new Customer(txtId.getText(), resultSet.getString("name"), resultSet.getString("address"), resultSet.getDouble("salary"));
+            txtName.setText(customer.getName());
+            txtAddress.setText(customer.getAddress());
+            txtSalary.setText(String.valueOf(customer.getSalary()));
+        }else{
+            System.out.println("Faild");
+        }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
