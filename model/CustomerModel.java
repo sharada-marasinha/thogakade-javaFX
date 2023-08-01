@@ -51,3 +51,33 @@ public class CustomerModel {
         return i>0?true:false;
     }
 }
+
+/*
+    Customer customer = new Customer(
+            txtId.getText(),
+            txtName.getText(),
+            txtAddress.getText(),
+            Double.parseDouble(txtSalary.getText()
+            ));
+        try {
+                Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
+
+        if (buttonType.get() == ButtonType.YES){
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
+        pstm.setObject(1,customer.getId());
+        pstm.setObject(2,customer.getName());
+        pstm.setObject(3,customer.getAddress());
+        pstm.setObject(4,customer.getSalary());
+
+        if (pstm.executeUpdate()>0){
+        new Alert(Alert.AlertType.INFORMATION,"Customer Added !").show();
+        }else{
+        new Alert(Alert.AlertType.ERROR,"Something went wrong !").show();
+        }
+        }
+
+        } catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
+        new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        }*/
