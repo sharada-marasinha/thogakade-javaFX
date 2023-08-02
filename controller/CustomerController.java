@@ -55,11 +55,7 @@ public class CustomerController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
                 }
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-            e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
