@@ -49,6 +49,8 @@ public class CustomerController implements Initializable {
             Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
             if (buttonType.get() == ButtonType.YES) {
                 boolean isAdd = CustomerModel.addCustomer(customer);
+                setCellValueFactory();
+                loadTable();
                 if (isAdd) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer Added !").show();
                 } else {
@@ -72,6 +74,8 @@ public class CustomerController implements Initializable {
             boolean isUpdated = CustomerModel.updateCustomer(customer);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer Updated !").show();
+                setCellValueFactory();
+                loadTable();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
             }
@@ -96,6 +100,7 @@ public class CustomerController implements Initializable {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
+
     public void txtSearch(ActionEvent actionEvent) {
         btnSearchAction(actionEvent);
     }
@@ -104,11 +109,16 @@ public class CustomerController implements Initializable {
         String id = txtId.getText();
         boolean isDeleted;
         try {
-            isDeleted = CustomerModel.deleteCustomer(id);
-            if (isDeleted) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Deleted !").show();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
+            Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Delete this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
+            if (buttonType.get() == ButtonType.YES) {
+                isDeleted = CustomerModel.deleteCustomer(id);
+                if (isDeleted) {
+                    new Alert(Alert.AlertType.INFORMATION, "Customer Deleted !").show();
+                    setCellValueFactory();
+                    loadTable();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
+                }
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -148,14 +158,13 @@ public class CustomerController implements Initializable {
         txtAddress.setText(newValue.getAddress());
         txtSalary.setText(String.valueOf(newValue.getSalary()));
     }
+
     private void setCellValueFactory() {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
     }
-
-
 }
 
 

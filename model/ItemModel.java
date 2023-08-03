@@ -37,4 +37,19 @@ public class ItemModel {
         return null;
 
     }
+
+    public static boolean update(Item item) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE Item SET description = ?, unitPrice = ?, qtyOnHand = ? WHERE code = ?";
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement psTm = connection.prepareStatement(sql);
+        psTm.setString(1, item.getDescription());
+        psTm.setDouble(2, item.getUnitPrice());
+        psTm.setInt(3, item.getQtyOnHand());
+        psTm.setString(4, item.getCode());
+        int i = psTm.executeUpdate();
+        if (i>0){
+            return true;
+        }
+        return false;
+    }
 }

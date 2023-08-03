@@ -19,7 +19,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class itemFormController implements Initializable {
+public class ItemFormController implements Initializable {
 
 
     @FXML
@@ -77,21 +77,13 @@ public class itemFormController implements Initializable {
             }
 
     }
-
     @FXML
-    void btnClearOnAction(ActionEvent event) {
-        txtCode.setText("");
-        txtDesc.setText("");
-        txtUnitPrice.setText("");
-        txtQty.setText("");
-    }
-
-    @FXML
-    void btnDeleteAction(ActionEvent event) {
+    void btnUpdateAction(ActionEvent event) {
+        Item item = new Item(txtCode.getText(),txtDesc.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.valueOf(txtQty.getText()));
         try {
-            boolean isDeleted = ItemModel.deleteItem(txtCode.getText());
-            if (isDeleted) {
-                new Alert(Alert.AlertType.INFORMATION, "Item Deleted !").show();
+            boolean isUpdated=ItemModel.update(item);
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "Item Updated !").show();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
             }
@@ -121,13 +113,26 @@ public class itemFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateAction(ActionEvent event) {
-
+    void txtSearch(ActionEvent event) {
+        btnSearchAction(event);
     }
 
     @FXML
-    void txtSearch(ActionEvent event) {
-        btnSearchAction(event);
+    void btnDeleteAction(ActionEvent event) {
+        try {
+            Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Delete this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
+            if (buttonType.get() == ButtonType.YES) {
+                boolean isDeleted = ItemModel.deleteItem(txtCode.getText());
+                if (isDeleted) {
+                    new Alert(Alert.AlertType.INFORMATION, "Item Deleted !").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     private void loadTable() {
@@ -161,6 +166,13 @@ public class itemFormController implements Initializable {
         colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
+    }
+    @FXML
+    void btnClearOnAction(ActionEvent event) {
+        txtCode.setText("");
+        txtDesc.setText("");
+        txtUnitPrice.setText("");
+        txtQty.setText("");
     }
 
 
