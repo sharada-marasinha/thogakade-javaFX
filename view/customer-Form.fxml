@@ -10,91 +10,91 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="565.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
    <children>
-      <TextField fx:id="txtId" layoutX="178.0" layoutY="97.0" onAction="#txtSearch" prefHeight="33.0" prefWidth="184.0" promptText="ID">
+      <TextField fx:id="txtId" layoutX="178.0" layoutY="102.0" onAction="#txtSearch" prefHeight="33.0" prefWidth="184.0" promptText="ID" stylesheets="@css/Table.css">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <TextField fx:id="txtName" layoutX="522.0" layoutY="100.0" prefHeight="33.0" prefWidth="184.0" promptText="Name">
+      <TextField fx:id="txtName" layoutX="511.0" layoutY="104.0" prefHeight="33.0" prefWidth="184.0" promptText="Name" stylesheets="@css/Table.css">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <TextField fx:id="txtAddress" layoutX="178.0" layoutY="159.0" prefHeight="33.0" prefWidth="184.0" promptText="Address">
+      <TextField fx:id="txtAddress" layoutX="178.0" layoutY="164.0" prefHeight="33.0" prefWidth="184.0" promptText="Address" stylesheets="@css/Table.css">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <TextField fx:id="txtSalary" layoutX="522.0" layoutY="162.0" prefHeight="33.0" prefWidth="184.0" promptText="Salary">
+      <TextField fx:id="txtSalary" layoutX="511.0" layoutY="166.0" prefHeight="33.0" prefWidth="184.0" promptText="Salary" stylesheets="@css/Table.css">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <Button layoutX="534.0" layoutY="508.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #fdcb6e;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Clear" textFill="WHITE">
+      <Button layoutX="535.0" layoutY="581.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #fdcb6e;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Clear" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="448.0" layoutY="508.0" mnemonicParsing="false" onAction="#btnAddAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #2ecc71;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Add" textFill="WHITE">
+      <Button layoutX="449.0" layoutY="581.0" mnemonicParsing="false" onAction="#btnAddAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #2ecc71;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Add" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="271.0" layoutY="509.0" mnemonicParsing="false" onAction="#btnSearchAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #3498db;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Search" textFill="WHITE">
+      <Button layoutX="272.0" layoutY="582.0" mnemonicParsing="false" onAction="#btnSearchAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #3498db;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Search" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="359.0" layoutY="509.0" mnemonicParsing="false" onAction="#btnUpdateAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #0984e3;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Update" textFill="WHITE">
+      <Button layoutX="360.0" layoutY="582.0" mnemonicParsing="false" onAction="#btnUpdateAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #0984e3;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Update" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="183.0" layoutY="508.0" mnemonicParsing="false" onAction="#btnDeleteAction" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: #e74c3c;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Delete" textFill="WHITE">
+      <Button layoutX="184.0" layoutY="581.0" mnemonicParsing="false" onAction="#btnDeleteAction" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: #e74c3c;" styleClass="edge-button" stylesheets="@css/Butten.css" text="Delete" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="70.0" stroke="#da0000" strokeType="INSIDE" strokeWidth="0.0" width="790.0" />
-      <Label layoutX="208.0" layoutY="3.0" prefHeight="65.0" prefWidth="379.0" text="Customer Form" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="70.0" stroke="#da0000" strokeType="INSIDE" strokeWidth="0.0" width="804.0" />
+      <Label layoutX="214.0" layoutY="2.0" prefHeight="65.0" prefWidth="379.0" text="Customer Form" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="43.0" />
          </font>
       </Label>
-      <TableView fx:id="fxTable" layoutX="89.0" layoutY="217.0" prefHeight="267.0" prefWidth="617.0" styleClass="textLabel" stylesheets="@css/Table.css">
+      <TableView fx:id="fxTable" layoutX="88.0" layoutY="229.0" prefHeight="320.0" prefWidth="617.0" styleClass="textLabel" stylesheets="@css/Table.css">
          <columns>
             <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="colName" prefWidth="157.0" text="Name" />
             <TableColumn fx:id="colAddress" prefWidth="201.0" text="Address" />
-            <TableColumn fx:id="colSalary" prefWidth="183.0" text="Salary" />
+            <TableColumn fx:id="colSalary" prefWidth="179.0" text="Salary" />
          </columns>
       </TableView>
-      <Label layoutX="102.0" layoutY="105.0" prefHeight="25.0" prefWidth="50.0" text="ID     :">
+      <Label layoutX="123.0" layoutY="108.0" prefHeight="25.0" prefWidth="50.0" text="ID     :">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="99.0" layoutY="167.0" prefHeight="25.0" prefWidth="70.0" text="Address :">
+      <Label layoutX="97.0" layoutY="170.0" prefHeight="25.0" prefWidth="70.0" text="Address :">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="418.0" layoutY="105.0" prefHeight="25.0" prefWidth="60.0" text="Name :">
+      <Label layoutX="440.0" layoutY="108.0" prefHeight="25.0" prefWidth="60.0" text="Name :">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="418.0" layoutY="167.0" prefHeight="25.0" prefWidth="60.0" text="Salary :">
+      <Label layoutX="440.0" layoutY="170.0" prefHeight="25.0" prefWidth="60.0" stylesheets="@css/Table.css" text="Salary :">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
    </children>

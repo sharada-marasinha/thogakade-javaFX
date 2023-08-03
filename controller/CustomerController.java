@@ -35,7 +35,9 @@ public class CustomerController implements Initializable {
         setCellValueFactory();
         loadTable();
         fxTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            setTableValuesToTxt(newValue);
+            if (null!=newValue) {
+                setTableValuesToTxt(newValue);
+            }
         });
     }
 

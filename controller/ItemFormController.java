@@ -54,34 +54,37 @@ public class ItemFormController implements Initializable {
         setCellValueFactory();
         loadTable();
         itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            setTableValuesToTxt(newValue);
+            if (null!=newValue) {
+                setTableValuesToTxt(newValue);
+            }
         });
     }
 
     @FXML
     void btnAddAction(ActionEvent event) {
-        Item item = new Item(txtCode.getText(),txtDesc.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.valueOf(txtQty.getText()));
+        Item item = new Item(txtCode.getText(), txtDesc.getText(), Double.parseDouble(txtUnitPrice.getText()), Integer.valueOf(txtQty.getText()));
         try {
             Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
             if (buttonType.get() == ButtonType.YES) {
-                    boolean isAdd = ItemModel.addItem(item);
-                    if (isAdd) {
-                        new Alert(Alert.AlertType.INFORMATION, "Item Added !").show();
-                    } else {
-                        new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
-                    }
+                boolean isAdd = ItemModel.addItem(item);
+                if (isAdd) {
+                    new Alert(Alert.AlertType.INFORMATION, "Item Added !").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
                 }
-            } catch (SQLException | ClassNotFoundException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-                e.printStackTrace();
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            e.printStackTrace();
+        }
 
     }
+
     @FXML
     void btnUpdateAction(ActionEvent event) {
-        Item item = new Item(txtCode.getText(),txtDesc.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.valueOf(txtQty.getText()));
+        Item item = new Item(txtCode.getText(), txtDesc.getText(), Double.parseDouble(txtUnitPrice.getText()), Integer.valueOf(txtQty.getText()));
         try {
-            boolean isUpdated=ItemModel.update(item);
+            boolean isUpdated = ItemModel.update(item);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Item Updated !").show();
             } else {
@@ -106,7 +109,7 @@ public class ItemFormController implements Initializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        if(item == null){
+        if (item == null) {
             new Alert(Alert.AlertType.ERROR, "Item Not Found !").show();
         }
 
@@ -167,6 +170,7 @@ public class ItemFormController implements Initializable {
         colQty.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
     }
+
     @FXML
     void btnClearOnAction(ActionEvent event) {
         txtCode.setText("");
