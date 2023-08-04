@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AboutFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="77.0" layoutX="-1.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
+      <Label layoutX="260.0" layoutY="1.0" prefHeight="73.0" prefWidth="280.0" text="About App" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="49.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#192a56" height="462.0" layoutX="62.0" layoutY="118.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="671.0" />
+      <Label layoutX="81.0" layoutY="139.0" text="About Us :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" layoutX="97.0" layoutY="188.0" prefHeight="73.0" prefWidth="594.0" text="Welcome to SuperMarketX, your one-stop solution for all your grocery shopping needs! We are a cutting-edge mobile application designed to provide you with a seamless and delightful shopping experience right at your fingertips." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" layoutX="102.0" layoutY="285.0" prefHeight="122.0" prefWidth="583.0" text="At SuperMarketX, we understand the value of your time and the importance of convenience. Our user-friendly interface allows you to browse through a vast range of high-quality products from the comfort of your home or while on the go. From fresh produce to pantry essentials, from household items to personal care products, we have everything you need to stock up your kitchen and home." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" layoutX="102.0" layoutY="428.0" prefHeight="77.0" prefWidth="583.0" text="Your satisfaction is our success, and we strive to continually improve and enhance our services based on your feedback. Thank you for choosing SuperMarketX as your trusted grocery partner. Happy shopping!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="369.0" layoutY="542.0" text="V.0.0.1" textFill="WHITE" />
+      <Label layoutX="101.0" layoutY="542.0" text="\@sharadamarasinha" textFill="WHITE">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="564.0" layoutY="543.0" text="ICET-ICM-103-Thogakade" textFill="WHITE">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

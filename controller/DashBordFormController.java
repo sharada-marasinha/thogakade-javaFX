@@ -70,7 +70,14 @@ public class DashBordFormController implements Initializable {
     public void btnExitOnAction(ActionEvent actionEvent) {
     }
 
-    public void btnAboutOnAction(ActionEvent actionEvent) {
+    public void btnAboutOnAction(ActionEvent actionEvent) throws IOException {
+        URL resource = this.getClass().getResource("/view/about-form.fxml");
+
+        assert resource != null;
+
+        Parent load = (Parent) FXMLLoader.load(resource);
+        this.rootPane.getChildren().clear();
+        this.rootPane.getChildren().add(load);
     }
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
