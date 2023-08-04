@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -54,7 +56,7 @@ public class ItemFormController implements Initializable {
         setCellValueFactory();
         loadTable();
         itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (null!=newValue) {
+            if (null != newValue) {
                 setTableValuesToTxt(newValue);
             }
         });
@@ -68,6 +70,8 @@ public class ItemFormController implements Initializable {
             if (buttonType.get() == ButtonType.YES) {
                 boolean isAdd = ItemModel.addItem(item);
                 if (isAdd) {
+                    loadTable();
+                    clearTxt();
                     new Alert(Alert.AlertType.INFORMATION, "Item Added !").show();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
@@ -86,6 +90,8 @@ public class ItemFormController implements Initializable {
         try {
             boolean isUpdated = ItemModel.update(item);
             if (isUpdated) {
+                loadTable();
+                clearTxt();
                 new Alert(Alert.AlertType.INFORMATION, "Item Updated !").show();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
@@ -127,6 +133,8 @@ public class ItemFormController implements Initializable {
             if (buttonType.get() == ButtonType.YES) {
                 boolean isDeleted = ItemModel.deleteItem(txtCode.getText());
                 if (isDeleted) {
+                    loadTable();
+                    clearTxt();
                     new Alert(Alert.AlertType.INFORMATION, "Item Deleted !").show();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
@@ -173,10 +181,23 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnClearOnAction(ActionEvent event) {
-        txtCode.setText("");
-        txtDesc.setText("");
-        txtUnitPrice.setText("");
-        txtQty.setText("");
+        clearTxt();
+    }
+
+    public void clearTxt() {
+        txtCode.clear();
+        txtDesc.clear();
+        txtUnitPrice.clear();
+        txtQty.clear();
+    }
+
+    public List<String> getItemCodes() throws SQLException, ClassNotFoundException {
+        ResultSet rst = DBConnection.getInstance().getConnection().prepareStatement("SELECT * FROM Item").executeQuery();
+        List<String> codes = new ArrayList<>();
+        while (rst.next()){
+            codes.add(rst.getString(1));
+        }
+        return codes;
     }
 
 

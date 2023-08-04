@@ -80,7 +80,13 @@ public class DashBordFormController implements Initializable {
         this.rootPane.getChildren().add(load);
     }
 
-    public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
+    public void btnPlaceOrderOnAction(ActionEvent actionEvent) throws IOException {
+        URL resource = this.getClass().getResource("/view/place-order-form.fxml");
 
+        assert resource != null;
+
+        Parent load = (Parent) FXMLLoader.load(resource);
+        this.rootPane.getChildren().clear();
+        this.rootPane.getChildren().add(load);
     }
 }
