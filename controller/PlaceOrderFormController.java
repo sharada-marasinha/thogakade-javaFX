@@ -1,5 +1,6 @@
 package controller;
 
+import db.DBConnection;
 import dto.Customer;
 import dto.Item;
 import javafx.animation.Animation;
@@ -8,23 +9,29 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.CustomerModel;
-import model.ItemDetails;
+import dto.OrderDetails;
 import model.ItemModel;
-import model.Order;
+import dto.Order;
 import view.tm.CartTm;
 
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class PlaceOrderFormController {
+public class PlaceOrderFormController implements Initializable {
     public Label lblDate;
     public Label lblTime;
     public ComboBox<String> cmbCustomerIds;
@@ -43,17 +50,19 @@ public class PlaceOrderFormController {
     public TableColumn colTotal;
     public TextField txtQtyOnNow;
     public Label lblTtl;
+    public Label lblOrderId;
 
     int cartSelectedRowForRemove = -1;
     ObservableList<CartTm> oblist = FXCollections.observableArrayList();
-
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         loadDateAndTime();
+        setOrderId();
         try {
             loadCustomerIds();
             loadItemCodes();
@@ -136,6 +145,7 @@ public class PlaceOrderFormController {
     }
 
     public void btnAddToCartOnAction(ActionEvent actionEvent) {
+
         String description = txtDesc.getText();
         int qtyOnHand = Integer.parseInt(txtQty.getText());
         double unitPrice = Double.parseDouble(txtUnitPrice.getText());
@@ -197,16 +207,25 @@ public class PlaceOrderFormController {
         }
     }
 
-    public void btnPlaceOrder(ActionEvent actionEvent) {
-        ArrayList<ItemDetails> items = new ArrayList<>();
+    public void btnPlaceOrder(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String oId=lblOrderId.getText();
+        String customerId=cmbCustomerIds.getValue();
+        String orderDate=lblDate.getText();
+
+        ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
         double ttl = 0;
         for (CartTm tempTm : oblist) {
             ttl+=tempTm.getTotal();
-            items.add(
-                    new ItemDetails(tempTm.getCode(),tempTm.getUnitPrice(),tempTm.getQty())
-            );
+            String itemCode=tempTm.getCode();
+            int orderQty=tempTm.getQty();
+            double unitPrice= tempTm.getUnitPrice();
+            OrderDetails orderDetails = new OrderDetails(oId,itemCode,orderQty,unitPrice);
+            orderDetailsArrayList.add(orderDetails);
         }
-        Order order = new Order("O-001",cmbCustomerIds.getValue(),date,lblTime.getText(),ttl,items);
+        Order order = new Order(oId,orderDate,customerId,orderDetailsArrayList);
+
+        System.out.println(orderDetailsArrayList);
+        System.out.println(order);
     if (new OrderController().placeOrder(order)){
         new Alert(Alert.AlertType.CONFIRMATION,"Order Success !").show();
     }else{
@@ -214,5 +233,27 @@ public class PlaceOrderFormController {
     }
 
     }
+    private void setOrderId(){
+        try{
+            String lastOrderId= getLastOrderId();
+            if(lastOrderId!=null){
+                lastOrderId = lastOrderId.split("[A-Z]")[1]; // D001==> 001
+                System.out.println(lastOrderId);
+                lastOrderId = String.format("D%03d",(Integer.parseInt(lastOrderId)+1));
+                lblOrderId.setText(lastOrderId);
+            }else{
+                lblOrderId.setText("D001");
+            }
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    public String getLastOrderId() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        Statement stm = connection.createStatement();
+        ResultSet rst = stm.executeQuery("SELECT id FROM Orders ORDER BY id DESC LIMIT 1");
+        return rst.next() ? rst.getString("id") : null;
+    }
+
 
 }

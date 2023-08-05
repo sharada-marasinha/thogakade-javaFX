@@ -11,7 +11,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PlaceOrderFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="67.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="804.0" />
@@ -26,7 +25,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="136.0" layoutY="91.0" prefHeight="30.0" prefWidth="57.0" text="O001">
+      <Label fx:id="lblOrderId" layoutX="136.0" layoutY="91.0" prefHeight="30.0" prefWidth="84.0">
          <font>
             <Font size="20.0" />
          </font>
