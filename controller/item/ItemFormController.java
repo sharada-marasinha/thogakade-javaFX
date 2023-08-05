@@ -1,5 +1,6 @@
-package controller;
+package controller.item;
 
+import controller.item.ItemController;
 import db.DBConnection;
 import dto.Item;
 import javafx.collections.FXCollections;
@@ -9,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.ItemModel;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -24,35 +24,29 @@ import java.util.ResourceBundle;
 public class ItemFormController implements Initializable {
 
 
+    ItemController itemController;
     @FXML
     private TableColumn<Item, String> colCode;
-
     @FXML
     private TableColumn<Item, String> colDesc;
-
     @FXML
     private TableColumn<Item, Integer> colQty;
-
     @FXML
     private TableColumn<Item, Double> colUnitPrice;
-
     @FXML
     private TableView<Item> itemTable;
-
     @FXML
     private TextField txtCode;
-
     @FXML
     private TextField txtDesc;
-
     @FXML
     private TextField txtQty;
-
     @FXML
     private TextField txtUnitPrice;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        itemController = new ItemController();
         setCellValueFactory();
         loadTable();
         itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -65,59 +59,47 @@ public class ItemFormController implements Initializable {
     @FXML
     void btnAddAction(ActionEvent event) {
         Item item = new Item(txtCode.getText(), txtDesc.getText(), Double.parseDouble(txtUnitPrice.getText()), Integer.valueOf(txtQty.getText()));
-        try {
-            Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
-            if (buttonType.get() == ButtonType.YES) {
-                boolean isAdd = ItemModel.addItem(item);
-                if (isAdd) {
-                    loadTable();
-                    clearTxt();
-                    new Alert(Alert.AlertType.INFORMATION, "Item Added !").show();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
-                }
+
+        Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
+        if (buttonType.get() == ButtonType.YES) {
+            boolean isAdd = itemController.addItem(item);
+            if (isAdd) {
+                loadTable();
+                clearTxt();
+                new Alert(Alert.AlertType.INFORMATION, "Item Added !").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-            e.printStackTrace();
         }
+
 
     }
 
     @FXML
     void btnUpdateAction(ActionEvent event) {
         Item item = new Item(txtCode.getText(), txtDesc.getText(), Double.parseDouble(txtUnitPrice.getText()), Integer.valueOf(txtQty.getText()));
-        try {
-            boolean isUpdated = ItemModel.update(item);
-            if (isUpdated) {
-                loadTable();
-                clearTxt();
-                new Alert(Alert.AlertType.INFORMATION, "Item Updated !").show();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        boolean isUpdated = itemController.updateItem(item);
+        if (isUpdated) {
+            loadTable();
+            clearTxt();
+            new Alert(Alert.AlertType.INFORMATION, "Item Updated !").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
         }
     }
 
     @FXML
     void btnSearchAction(ActionEvent event) {
         Item item = null;
-        try {
-            item = ItemModel.searchItem(txtCode.getText());
-            txtDesc.setText(item.getDescription());
-            txtUnitPrice.setText(String.valueOf(item.getUnitPrice()));
-            txtQty.setText(String.valueOf(item.getQtyOnHand()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        item = itemController.searchItem(txtCode.getText());
         if (item == null) {
             new Alert(Alert.AlertType.ERROR, "Item Not Found !").show();
+            return;
         }
+        txtDesc.setText(item.getDescription());
+        txtUnitPrice.setText(String.valueOf(item.getUnitPrice()));
+        txtQty.setText(String.valueOf(item.getQtyOnHand()));
+
 
     }
 
@@ -128,41 +110,22 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnDeleteAction(ActionEvent event) {
-        try {
-            Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Delete this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
-            if (buttonType.get() == ButtonType.YES) {
-                boolean isDeleted = ItemModel.deleteItem(txtCode.getText());
-                if (isDeleted) {
-                    loadTable();
-                    clearTxt();
-                    new Alert(Alert.AlertType.INFORMATION, "Item Deleted !").show();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
-                }
+        Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Delete this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
+        if (buttonType.get() == ButtonType.YES) {
+            boolean isDeleted = itemController.deleteItem(txtCode.getText());
+            if (isDeleted) {
+                loadTable();
+                clearTxt();
+                new Alert(Alert.AlertType.INFORMATION, "Item Deleted !").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     private void loadTable() {
-        String SQL = "Select * From item";
-        ObservableList<Item> list = FXCollections.observableArrayList();
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery(SQL);
-
-            while (rst.next()) {
-                Item item = new Item(rst.getString(1), rst.getString(2), rst.getDouble(3), rst.getInt(4));
-                list.add(item);
-            }
-            itemTable.setItems(list);
-
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+        ObservableList<Item> allItem = itemController.getAllItem();
+        itemTable.setItems(allItem);
     }
 
     public void setTableValuesToTxt(Item newValue) {
@@ -194,7 +157,7 @@ public class ItemFormController implements Initializable {
     public List<String> getItemCodes() throws SQLException, ClassNotFoundException {
         ResultSet rst = DBConnection.getInstance().getConnection().prepareStatement("SELECT * FROM Item").executeQuery();
         List<String> codes = new ArrayList<>();
-        while (rst.next()){
+        while (rst.next()) {
             codes.add(rst.getString(1));
         }
         return codes;

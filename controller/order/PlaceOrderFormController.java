@@ -1,8 +1,14 @@
-package controller;
+package controller.order;
 
+import controller.customer.CustomerController;
+import controller.customer.CustomerFormController;
+import controller.item.ItemController;
+import controller.item.ItemFormController;
 import db.DBConnection;
 import dto.Customer;
 import dto.Item;
+import dto.Order;
+import dto.OrderDetails;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,10 +19,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-import model.CustomerModel;
-import dto.OrderDetails;
-import model.ItemModel;
-import dto.Order;
 import view.tm.CartTm;
 
 import java.net.URL;
@@ -54,8 +56,14 @@ public class PlaceOrderFormController implements Initializable {
 
     int cartSelectedRowForRemove = -1;
     ObservableList<CartTm> oblist = FXCollections.observableArrayList();
+    CustomerController customerController;
+    ItemController itemController;
+    Date date;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        customerController = new CustomerController();
+        itemController = new ItemController();
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
@@ -85,39 +93,31 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     private void setItemData(String itemCode) {
-        Item item = null;
-        try {
-            item = ItemModel.searchItem(itemCode);
-            txtDesc.setText(item.getDescription());
-            txtUnitPrice.setText(String.valueOf(item.getUnitPrice()));
-            txtQty.setText(String.valueOf(item.getQtyOnHand()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Item item = itemController.searchItem(itemCode);
         if (item == null) {
             new Alert(Alert.AlertType.ERROR, "Item Not Found !").show();
+            return;
         }
+        txtDesc.setText(item.getDescription());
+        txtUnitPrice.setText(String.valueOf(item.getUnitPrice()));
+        txtQty.setText(String.valueOf(item.getQtyOnHand()));
+
+
     }
 
     private void setCustomerData(String customerId) {
-        try {
-            Customer customer = CustomerModel.searchCustomer(customerId);
-            if (customer == null) {
-                new Alert(Alert.AlertType.ERROR, "Customer Not Found !").show();
-            }
-            txtName.setText(customer.getName());
-            txtAddress.setText(customer.getAddress());
-            txtSalary.setText(String.valueOf(customer.getSalary()));
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        Customer customer = customerController.searchCustomer(customerId);
+        if (customer == null) {
+            new Alert(Alert.AlertType.ERROR, "Customer Not Found !").show();
         }
+        txtName.setText(customer.getName());
+        txtAddress.setText(customer.getAddress());
+        txtSalary.setText(String.valueOf(customer.getSalary()));
+
     }
 
     private void loadCustomerIds() throws SQLException, ClassNotFoundException {
-        List<String> customerIds = new CustomerController().getCustomerIds();
+        List<String> customerIds = new CustomerFormController().getCustomerIds();
         cmbCustomerIds.getItems().addAll(customerIds);
     }
 
@@ -125,7 +125,7 @@ public class PlaceOrderFormController implements Initializable {
         List<String> itemCodes = new ItemFormController().getItemCodes();
         cmdItemCode.getItems().addAll(itemCodes);
     }
-    Date date;
+
     private void loadDateAndTime() {
         date = new Date();
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
@@ -208,46 +208,48 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     public void btnPlaceOrder(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        String oId=lblOrderId.getText();
-        String customerId=cmbCustomerIds.getValue();
-        String orderDate=lblDate.getText();
+        String oId = lblOrderId.getText();
+        String customerId = cmbCustomerIds.getValue();
+        String orderDate = lblDate.getText();
 
         ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
         double ttl = 0;
         for (CartTm tempTm : oblist) {
-            ttl+=tempTm.getTotal();
-            String itemCode=tempTm.getCode();
-            int orderQty=tempTm.getQty();
-            double unitPrice= tempTm.getUnitPrice();
-            OrderDetails orderDetails = new OrderDetails(oId,itemCode,orderQty,unitPrice);
+            ttl += tempTm.getTotal();
+            String itemCode = tempTm.getCode();
+            int orderQty = tempTm.getQty();
+            double unitPrice = tempTm.getUnitPrice();
+            OrderDetails orderDetails = new OrderDetails(oId, itemCode, orderQty, unitPrice);
             orderDetailsArrayList.add(orderDetails);
         }
-        Order order = new Order(oId,orderDate,customerId,orderDetailsArrayList);
+        Order order = new Order(oId, orderDate, customerId, orderDetailsArrayList);
 
         System.out.println(orderDetailsArrayList);
         System.out.println(order);
-    if (new OrderController().placeOrder(order)){
-        new Alert(Alert.AlertType.CONFIRMATION,"Order Success !").show();
-    }else{
-        new Alert(Alert.AlertType.ERROR,"Try Again").show();
-    }
+        if (new OrderController().placeOrder(order)) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Order Success !").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Try Again").show();
+        }
 
     }
-    private void setOrderId(){
-        try{
-            String lastOrderId= getLastOrderId();
-            if(lastOrderId!=null){
+
+    private void setOrderId() {
+        try {
+            String lastOrderId = getLastOrderId();
+            if (lastOrderId != null) {
                 lastOrderId = lastOrderId.split("[A-Z]")[1]; // D001==> 001
                 System.out.println(lastOrderId);
-                lastOrderId = String.format("D%03d",(Integer.parseInt(lastOrderId)+1));
+                lastOrderId = String.format("D%03d", (Integer.parseInt(lastOrderId) + 1));
                 lblOrderId.setText(lastOrderId);
-            }else{
+            } else {
                 lblOrderId.setText("D001");
             }
-        }catch(SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
     public String getLastOrderId() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         Statement stm = connection.createStatement();

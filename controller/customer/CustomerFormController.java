@@ -1,26 +1,22 @@
-package controller;
+package controller.customer;
 
 import db.DBConnection;
 import dto.Customer;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.CustomerModel;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CustomerController implements Initializable {
+public class CustomerFormController implements Initializable {
     public TextField txtId;
     public TextField txtName;
     public TextField txtAddress;
@@ -31,9 +27,11 @@ public class CustomerController implements Initializable {
     public TableColumn<Customer, String> colName;
     public TableColumn<Customer, String> colAddress;
     public TableColumn<Customer, Double> colSalary;
+    CustomerController customerController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        customerController = new CustomerController();
         setCellValueFactory();
         loadTable();
         fxTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -49,23 +47,20 @@ public class CustomerController implements Initializable {
         String address = txtAddress.getText();
         double salary = Double.parseDouble(txtSalary.getText());
         Customer customer = new Customer(id, name, address, salary);
-        try {
-            Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
-            if (buttonType.get() == ButtonType.YES) {
-                boolean isAdd = CustomerModel.addCustomer(customer);
-                // setCellValueFactory();
-                loadTable();
-                clear();
-                if (isAdd) {
-                    new Alert(Alert.AlertType.INFORMATION, "Customer Added !").show();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
-                }
+
+        Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
+        if (buttonType.get() == ButtonType.YES) {
+            boolean isAdd = customerController.addCustomer(customer);
+            // setCellValueFactory();
+            loadTable();
+            clear();
+            if (isAdd) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Added !").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
+
     }
 
     public void btnUpdateAction(ActionEvent actionEvent) {
@@ -74,36 +69,25 @@ public class CustomerController implements Initializable {
         String address = txtAddress.getText();
         double salary = Double.parseDouble(txtSalary.getText());
         Customer customer = new Customer(id, name, address, salary);
-
-        try {
-            boolean isUpdated = CustomerModel.updateCustomer(customer);
-            if (isUpdated) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Updated !").show();
-                loadTable();
-                clear();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-
+        boolean isUpdated = customerController.updateCustomer(customer);
+        if (isUpdated) {
+            new Alert(Alert.AlertType.INFORMATION, "Customer Updated !").show();
+            loadTable();
+            clear();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
         }
+
     }
 
     public void btnSearchAction(ActionEvent actionEvent) {
-        try {
-            Customer customer = CustomerModel.searchCustomer(txtId.getText());
+            Customer customer = customerController.searchCustomer(txtId.getText());
             if (customer == null) {
                 new Alert(Alert.AlertType.ERROR, "Customer Not Found !").show();
             }
             txtName.setText(customer.getName());
             txtAddress.setText(customer.getAddress());
             txtSalary.setText(String.valueOf(customer.getSalary()));
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
     }
 
     public void txtSearch(ActionEvent actionEvent) {
@@ -113,10 +97,9 @@ public class CustomerController implements Initializable {
     public void btnDeleteAction(ActionEvent actionEvent) {
         String id = txtId.getText();
         boolean isDeleted;
-        try {
             Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Delete this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
             if (buttonType.get() == ButtonType.YES) {
-                isDeleted = CustomerModel.deleteCustomer(id);
+                isDeleted = customerController.deleteCustomer(id);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer Deleted !").show();
                     loadTable();
@@ -125,10 +108,7 @@ public class CustomerController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
                 }
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+
     }
 
     public void btnClearOnAction(ActionEvent actionEvent) {
@@ -144,21 +124,8 @@ public class CustomerController implements Initializable {
 
 
     private void loadTable() {
-        String SQL = "Select * From Customer";
-        ObservableList<Customer> list = FXCollections.observableArrayList();
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery(SQL);
-
-            while (rst.next()) {
-                Customer customer = new Customer(rst.getString("id"), rst.getString("name"), rst.getString("address"), rst.getDouble("salary"));
-                list.add(customer);
-            }
-            fxTable.setItems(list);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+        ObservableList<Customer> allCustomer = customerController.getAllCustomer();
+        fxTable.setItems(allCustomer);
     }
 
     public void setTableValuesToTxt(Customer newValue) {

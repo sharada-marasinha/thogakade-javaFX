@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customer.CustomerFormController">
    <children>
       <TextField fx:id="txtId" layoutX="178.0" layoutY="102.0" onAction="#txtSearch" prefHeight="33.0" prefWidth="184.0" promptText="ID" stylesheets="@css/Table.css">
          <font>
