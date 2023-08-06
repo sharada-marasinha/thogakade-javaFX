@@ -14,11 +14,11 @@ public class OrderController {
         try {
             connection.setAutoCommit(false);
             PreparedStatement stm = connection.prepareStatement("INSERT INTO Orders value(?,?,?)");
-            stm.setObject(1,order.getId());
-            stm.setObject(2,order.getDate());
-            stm.setObject(3,order.getCustomerId());
-            boolean orderIsAdded = stm.executeUpdate()>0;
-            if(orderIsAdded){
+            stm.setObject(1, order.getId());
+            stm.setObject(2, order.getDate());
+            stm.setObject(3, order.getCustomerId());
+            boolean orderIsAdded = stm.executeUpdate() > 0;
+            if (orderIsAdded) {
                 boolean orderDetailAdded = OrderDetailController.addOrderDetail(order.getOrderDetails());
                 if (orderDetailAdded) {
                     boolean itemIsUpdate = ItemController.updateStock(order.getOrderDetails());
@@ -28,9 +28,9 @@ public class OrderController {
                     }
                 }
             }
-
+            connection.rollback();
             return false;
-        }finally {
+        } finally {
             connection.setAutoCommit(true);
         }
 

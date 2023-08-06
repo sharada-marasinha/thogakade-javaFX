@@ -94,25 +94,30 @@ public class PlaceOrderFormController implements Initializable {
 
     private void setItemData(String itemCode) {
         Item item = itemController.searchItem(itemCode);
-        if (item == null) {
+        if (item != null) {
+            txtDesc.setText(item.getDescription());
+            txtUnitPrice.setText(String.valueOf(item.getUnitPrice()));
+            txtQty.setText(String.valueOf(item.getQtyOnHand()));
+
+        } else {
             new Alert(Alert.AlertType.ERROR, "Item Not Found !").show();
-            return;
+
         }
-        txtDesc.setText(item.getDescription());
-        txtUnitPrice.setText(String.valueOf(item.getUnitPrice()));
-        txtQty.setText(String.valueOf(item.getQtyOnHand()));
 
 
     }
 
     private void setCustomerData(String customerId) {
         Customer customer = customerController.searchCustomer(customerId);
-        if (customer == null) {
+        if (customer != null) {
+            txtName.setText(customer.getName());
+            txtAddress.setText(customer.getAddress());
+            txtSalary.setText(String.valueOf(customer.getSalary()));
+        } else {
+
             new Alert(Alert.AlertType.ERROR, "Customer Not Found !").show();
         }
-        txtName.setText(customer.getName());
-        txtAddress.setText(customer.getAddress());
-        txtSalary.setText(String.valueOf(customer.getSalary()));
+
 
     }
 
