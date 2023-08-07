@@ -1,10 +1,12 @@
 package controller;
 
 import db.DBConnection;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -73,7 +75,16 @@ public class DashRootController implements Initializable {
         }
 
     }
+    DashBordFormController dashBordFormController=new DashBordFormController();
 
+    public void retCustomerOnAction(MouseEvent mouseEvent) {
+        //dashBordFormController.btnCustomerFormOnAction((ActionEvent) mouseEvent);
+    }
 
+    public void retOrderOnAction(MouseEvent mouseEvent) {
+    }
+
+    public void retInvantoryOnAction(MouseEvent mouseEvent) {
+    }
 }
 
