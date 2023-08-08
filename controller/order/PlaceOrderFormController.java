@@ -224,13 +224,10 @@ public class PlaceOrderFormController implements Initializable {
             String itemCode = tempTm.getCode();
             int orderQty = tempTm.getQty();
             double unitPrice = tempTm.getUnitPrice();
-            OrderDetails orderDetails = new OrderDetails(oId, itemCode, orderQty, unitPrice);
-            orderDetailsArrayList.add(orderDetails);
+            orderDetailsArrayList.add(new OrderDetails(oId, itemCode, orderQty, unitPrice));
         }
         Order order = new Order(oId, orderDate, customerId, orderDetailsArrayList);
 
-        System.out.println(orderDetailsArrayList);
-        System.out.println(order);
         if (new OrderController().placeOrder(order)) {
             new Alert(Alert.AlertType.CONFIRMATION, "Order Success !").show();
         } else {
