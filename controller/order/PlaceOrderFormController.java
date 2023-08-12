@@ -42,24 +42,24 @@ public class PlaceOrderFormController implements Initializable {
     public TextField txtQty;
     public TextField txtUnitPrice;
     public TableView<CartTm> tblCart;
-    public TableColumn colCode;
-    public TableColumn colDesc;
-    public TableColumn colQty;
-    public TableColumn colUnitPrice;
-    public TableColumn colTotal;
+    public TableColumn <CartTm, String> colCode;
+    public TableColumn <CartTm, String> colDesc;
+    public TableColumn <CartTm, Integer>  colQty;
+    public TableColumn <CartTm, Double> colUnitPrice;
+    public TableColumn <CartTm, Double> colTotal;
     public TextField txtQtyOnNow;
     public Label lblTtl;
     public Label lblOrderId;
 
-    int cartSelectedRowForRemove = -1;
-    ObservableList<CartTm> obList = FXCollections.observableArrayList();
-    CustomerController customerController;
-    ItemController itemController;
+    private int cartSelectedRowForRemove = -1;
+    private ObservableList<CartTm> obList = FXCollections.observableArrayList();
+    private CustomerController customerController;
+    private ItemController itemController;
     Date date;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        customerController = new CustomerController();
+        customerController = CustomerController.getInstance();
         itemController = ItemController.getInstance();
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));

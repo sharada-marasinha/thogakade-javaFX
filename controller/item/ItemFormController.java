@@ -40,6 +40,8 @@ public class ItemFormController implements Initializable {
     @FXML
     private TextField txtUnitPrice;
 
+   Alert wrongAlert= new Alert(Alert.AlertType.ERROR, "Something went wrong !");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         itemController = ItemController.getInstance();
@@ -53,11 +55,11 @@ public class ItemFormController implements Initializable {
     }
 
     @FXML
-    void btnAddAction(ActionEvent event) {
+    void btnAddAction() {
         Item item = new Item(txtCode.getText(), txtDesc.getText(), Double.parseDouble(txtUnitPrice.getText()), Integer.valueOf(txtQty.getText()));
 
         Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
-        if (buttonType.get() == ButtonType.YES) {
+        if (buttonType.isPresent()) {
             boolean isAdd = itemController.addItem(item);
             if (isAdd) {
                 loadTable();
@@ -72,7 +74,7 @@ public class ItemFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateAction(ActionEvent event) {
+    void btnUpdateAction() {
         Item item = new Item(txtCode.getText(), txtDesc.getText(), Double.parseDouble(txtUnitPrice.getText()), Integer.valueOf(txtQty.getText()));
         boolean isUpdated = itemController.updateItem(item);
         if (isUpdated) {
@@ -80,14 +82,13 @@ public class ItemFormController implements Initializable {
             clearTxt();
             new Alert(Alert.AlertType.INFORMATION, "Item Updated !").show();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
+            wrongAlert.show();
         }
     }
 
     @FXML
     void btnSearchAction(ActionEvent event) {
-        Item item = null;
-        item = itemController.searchItem(txtCode.getText());
+        Item item = itemController.searchItem(txtCode.getText());
         if (item == null) {
             new Alert(Alert.AlertType.ERROR, "Item Not Found !").show();
             return;
@@ -105,16 +106,16 @@ public class ItemFormController implements Initializable {
     }
 
     @FXML
-    void btnDeleteAction(ActionEvent event) {
+    void btnDeleteAction() {
         Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Delete this customer?", ButtonType.YES, ButtonType.NO).showAndWait();
-        if (buttonType.get() == ButtonType.YES) {
+        if (buttonType.isPresent()) {
             boolean isDeleted = itemController.deleteItem(txtCode.getText());
             if (isDeleted) {
                 loadTable();
                 clearTxt();
                 new Alert(Alert.AlertType.INFORMATION, "Item Deleted !").show();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Something went wrong !").show();
+                wrongAlert.show();
             }
         }
     }
@@ -139,7 +140,7 @@ public class ItemFormController implements Initializable {
     }
 
     @FXML
-    void btnClearOnAction(ActionEvent event) {
+    void btnClearOnAction() {
         clearTxt();
     }
 

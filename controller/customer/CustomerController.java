@@ -9,6 +9,14 @@ import javafx.scene.control.Alert;
 import java.sql.*;
 
 public class CustomerController implements CustomerService {
+    private static CustomerController instance;
+    private CustomerController(){}
+    public static CustomerController getInstance(){
+        if(null == instance){
+            instance=new CustomerController();
+        }
+        return instance;
+    }
 
     @Override
     public boolean addCustomer(Customer customer) {
