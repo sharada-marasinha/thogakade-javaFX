@@ -14,7 +14,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,10 +21,8 @@ import javafx.util.Duration;
 import view.tm.CartTm;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -55,7 +52,7 @@ public class PlaceOrderFormController implements Initializable {
     public Label lblOrderId;
 
     int cartSelectedRowForRemove = -1;
-    ObservableList<CartTm> oblist = FXCollections.observableArrayList();
+    ObservableList<CartTm> obList = FXCollections.observableArrayList();
     CustomerController customerController;
     ItemController itemController;
     Date date;
@@ -78,17 +75,11 @@ public class PlaceOrderFormController implements Initializable {
             e.printStackTrace();
         }
 
-        tblCart.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            cartSelectedRowForRemove = (int) newValue;
-        });
+        tblCart.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> cartSelectedRowForRemove = (int) newValue);
         /*===============================================*/
-        cmbCustomerIds.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            setCustomerData(newValue);
-        });
+        cmbCustomerIds.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setCustomerData(newValue));
 
-        cmdItemCode.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            setItemData(newValue);
-        });
+        cmdItemCode.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setItemData(newValue));
         /*===============================================*/
     }
 
@@ -149,7 +140,7 @@ public class PlaceOrderFormController implements Initializable {
 
     }
 
-    public void btnAddToCartOnAction(ActionEvent actionEvent) {
+    public void btnAddToCartOnAction() {
 
         String description = txtDesc.getText();
         int qtyOnHand = Integer.parseInt(txtQty.getText());
@@ -164,9 +155,9 @@ public class PlaceOrderFormController implements Initializable {
         CartTm tm = new CartTm(cmdItemCode.getValue(), description, qtyForCustomer, unitPrice, total);
         int rowNumber = isExist(tm);
         if (rowNumber == -1) {
-            oblist.add(tm);
+            obList.add(tm);
         } else {
-            CartTm tempTm = oblist.get(rowNumber);
+            CartTm tempTm = obList.get(rowNumber);
             CartTm newTm = new CartTm(tempTm.getCode(),
                     tempTm.getDescription(),
                     tempTm.getQty() + qtyForCustomer,
@@ -177,17 +168,17 @@ public class PlaceOrderFormController implements Initializable {
                 new Alert(Alert.AlertType.WARNING, "Invalid QTY").show();
                 return;
             }
-            oblist.remove(rowNumber);
-            oblist.add(newTm);
+            obList.remove(rowNumber);
+            obList.add(newTm);
         }
 
-        tblCart.setItems(oblist);
+        tblCart.setItems(obList);
         calculateCost();
     }
 
     private int isExist(CartTm tm) {
-        for (int i = 0; i < oblist.size(); i++) {
-            if (tm.getCode().equals(oblist.get(i).getCode())) {
+        for (int i = 0; i < obList.size(); i++) {
+            if (tm.getCode().equals(obList.get(i).getCode())) {
                 return i;
             }
         }
@@ -196,31 +187,30 @@ public class PlaceOrderFormController implements Initializable {
 
     void calculateCost() {
         double ttl = 0;
-        for (CartTm tm : oblist) {
+        for (CartTm tm : obList) {
             ttl += tm.getTotal();
         }
         lblTtl.setText(ttl + " /=");
     }
 
-    public void clearOnAction(ActionEvent actionEvent) {
+    public void clearOnAction() {
         if (cartSelectedRowForRemove == -1) {
             new Alert(Alert.AlertType.WARNING, "Please Select a Row").show();
         } else {
-            oblist.remove(cartSelectedRowForRemove);
+            obList.remove(cartSelectedRowForRemove);
             calculateCost();
             tblCart.refresh();
         }
     }
 
-    public void btnPlaceOrder(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void btnPlaceOrder() throws SQLException, ClassNotFoundException {
         String oId = lblOrderId.getText();
         String customerId = cmbCustomerIds.getValue();
         String orderDate = lblDate.getText();
 
         ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
-        double ttl = 0;
-        for (CartTm tempTm : oblist) {
-            ttl += tempTm.getTotal();
+
+        for (CartTm tempTm : obList) {
             String itemCode = tempTm.getCode();
             int orderQty = tempTm.getQty();
             double unitPrice = tempTm.getUnitPrice();
@@ -241,7 +231,6 @@ public class PlaceOrderFormController implements Initializable {
             String lastOrderId = getLastOrderId();
             if (lastOrderId != null) {
                 lastOrderId = lastOrderId.split("[A-Z]")[1]; // D001==> 001
-                System.out.println(lastOrderId);
                 lastOrderId = String.format("D%03d", (Integer.parseInt(lastOrderId) + 1));
                 lblOrderId.setText(lastOrderId);
             } else {
@@ -253,9 +242,7 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     public String getLastOrderId() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getInstance().getConnection();
-        Statement stm = connection.createStatement();
-        ResultSet rst = stm.executeQuery("SELECT id FROM Orders ORDER BY id DESC LIMIT 1");
+        ResultSet rst = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id FROM Orders ORDER BY id DESC LIMIT 1");
         return rst.next() ? rst.getString("id") : null;
     }
 
