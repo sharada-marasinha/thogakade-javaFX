@@ -52,10 +52,11 @@ public class CustomerController implements CustomerService {
     }
 
     @Override
-    public Customer searchCustomer(String customerId) {
+    public Customer searchCustomer(String customerId)  {
         String SQL = "Select * From Customer where id='" + customerId + "'";
 
         Connection connection = null;
+
         try {
             connection = DBConnection.getInstance().getConnection();
             Statement stm = connection.createStatement();
@@ -64,10 +65,17 @@ public class CustomerController implements CustomerService {
                 Customer customer = new Customer(customerId, resultSet.getString("name"), resultSet.getString("address"), resultSet.getDouble("salary"));
                 return customer;
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+   /*     } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException();
+            //e.printStackTrace();
+            //new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }*/
 
         return null;
     }

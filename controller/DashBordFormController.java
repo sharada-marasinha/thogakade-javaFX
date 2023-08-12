@@ -1,11 +1,9 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -30,11 +28,11 @@ public class DashBordFormController implements Initializable {
 
         assert resource != null;
 
-        Parent load = null;
+        Parent load;
         try {
-            load = (Parent) FXMLLoader.load(resource);
-            this.rootPane.getChildren().clear();
-            this.rootPane.getChildren().add(load);
+            load = FXMLLoader.load(resource);
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(load);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,51 +40,52 @@ public class DashBordFormController implements Initializable {
     }
 
 
-    public void btnCustomerFormOnAction(ActionEvent actionEvent) throws IOException {
+    public void btnCustomerFormOnAction() throws IOException {
         URL resource = this.getClass().getResource("/view/customer-Form.fxml");
 
         assert resource != null;
 
-        Parent load = (Parent) FXMLLoader.load(resource);
-        this.rootPane.getChildren().clear();
-        this.rootPane.getChildren().add(load);
+        Parent load =  FXMLLoader.load(resource);
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(load);
     }
 
-    public void btnItemFormOnAction(ActionEvent actionEvent) throws IOException {
+    public void btnItemFormOnAction() throws IOException {
         URL resource = this.getClass().getResource("/view/item-Form.fxml");
 
         assert resource != null;
 
-        Parent load = (Parent) FXMLLoader.load(resource);
-        this.rootPane.getChildren().clear();
-        this.rootPane.getChildren().add(load);
+        Parent load = FXMLLoader.load(resource);
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(load);
     }
 
 
-    public void lblOnActionDash(MouseEvent mouseEvent) {
+    public void lblOnActionDash() {
         loadDash();
     }
 
-    public void btnExitOnAction(ActionEvent actionEvent) {
+    public void btnExitOnAction() {
+        System.exit(0);
     }
 
-    public void btnAboutOnAction(ActionEvent actionEvent) throws IOException {
+    public void btnAboutOnAction() throws IOException {
         URL resource = this.getClass().getResource("/view/about-form.fxml");
 
         assert resource != null;
 
-        Parent load = (Parent) FXMLLoader.load(resource);
-        this.rootPane.getChildren().clear();
-        this.rootPane.getChildren().add(load);
+        Parent load = FXMLLoader.load(resource);
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(load);
     }
 
-    public void btnPlaceOrderOnAction(ActionEvent actionEvent) throws IOException {
+    public void btnPlaceOrderOnAction() throws IOException {
         URL resource = this.getClass().getResource("/view/place-order-form.fxml");
 
         assert resource != null;
 
-        Parent load = (Parent) FXMLLoader.load(resource);
-        this.rootPane.getChildren().clear();
-        this.rootPane.getChildren().add(load);
+        Parent load = FXMLLoader.load(resource);
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(load);
     }
 }
