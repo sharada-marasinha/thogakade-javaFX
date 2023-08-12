@@ -60,7 +60,7 @@ public class PlaceOrderFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         customerController = new CustomerController();
-        itemController = new ItemController();
+        itemController = ItemController.getInstance();
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));

@@ -8,10 +8,22 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ItemController implements ItemService {
-    public static boolean updateStock(ArrayList<OrderDetails> orderDetails) throws SQLException, ClassNotFoundException {
+
+    private static ItemController instance;
+
+    private ItemController(){}
+
+    public static ItemController getInstance(){
+        if (null==instance){
+            instance=new ItemController();
+        }
+        return instance;
+    }
+
+    public static boolean updateStock(List<OrderDetails> orderDetails) throws SQLException, ClassNotFoundException {
         for (OrderDetails orderDetail : orderDetails) {
             if(!updateStock(orderDetail)){
                 return false;
@@ -29,23 +41,21 @@ public class ItemController implements ItemService {
 
     @Override
     public boolean addItem(Item item) {
-        String SQL = "Insert into Item Values(?,?,?,?)";
-        Connection connection = null;
-        int i = -1;
         try {
-            connection = DBConnection.getInstance().getConnection();
+            Connection connection = DBConnection.getInstance().getConnection();
+            String SQL = "Insert into Item Values(?,?,?,?)";
             PreparedStatement psTm = connection.prepareStatement(SQL);
             psTm.setObject(1, item.getCode());
             psTm.setObject(2, item.getDescription());
             psTm.setObject(3, item.getUnitPrice());
             psTm.setObject(4, item.getQtyOnHand());
-            i = psTm.executeUpdate();
+            int i = psTm.executeUpdate();
+            return i > 0 ? true : false;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-
-        return i > 0 ? true : false;
+        return false;
     }
 
     @Override
@@ -73,15 +83,14 @@ public class ItemController implements ItemService {
 
     @Override
     public Item searchItem(String itemCode) {
-        String SQL = "Select * From Item where code='" + itemCode + "'";
-        Connection connection = null;
         try {
-            connection = DBConnection.getInstance().getConnection();
+            Connection connection = DBConnection.getInstance().getConnection();
             Statement stm = connection.createStatement();
+            String SQL = "Select * From Item where code='" + itemCode + "'";
             ResultSet resultSet = stm.executeQuery(SQL);
             if (resultSet.next()) {
-                Item item = new Item(itemCode, resultSet.getString(2), resultSet.getDouble(3), resultSet.getInt(4));
-                return item;
+                return new Item(itemCode, resultSet.getString(2), resultSet.getDouble(3), resultSet.getInt(4));
+
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -104,11 +113,11 @@ public class ItemController implements ItemService {
 
     @Override
     public ObservableList<Item> getAllItem() {
-        String SQL = "Select * From item";
         ObservableList<Item> list = FXCollections.observableArrayList();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement stm = connection.createStatement();
+            String SQL = "Select * From item";
             ResultSet rst = stm.executeQuery(SQL);
 
             while (rst.next()) {
@@ -120,6 +129,6 @@ public class ItemController implements ItemService {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return list;
     }
 }
