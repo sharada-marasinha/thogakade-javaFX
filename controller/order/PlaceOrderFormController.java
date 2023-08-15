@@ -131,10 +131,7 @@ public class PlaceOrderFormController implements Initializable {
 
         } else {
             new Alert(Alert.AlertType.ERROR, "Item Not Found !").show();
-
         }
-
-
     }
 
     private void setCustomerData(String customerId) {

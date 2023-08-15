@@ -3,6 +3,7 @@ package controller.customer;
 import db.DBConnection;
 import dto.Customer;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,16 +16,32 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
-    public TextField txtId;
-    public TextField txtName;
-    public TextField txtAddress;
-    public TextField txtSalary;
+    @FXML
+    private TableColumn<Customer, String> colAddress;
 
-    public TableView<Customer> fxTable;
-    public TableColumn<Customer, String> colId;
-    public TableColumn<Customer, String> colName;
-    public TableColumn<Customer, String> colAddress;
-    public TableColumn<Customer, Double> colSalary;
+    @FXML
+    private TableColumn<Customer, String> colId;
+
+    @FXML
+    private TableColumn<Customer, String> colName;
+
+    @FXML
+    private TableColumn<Customer, Double> colSalary;
+
+    @FXML
+    private TableView<Customer> fxTable;
+
+    @FXML
+    private TextField txtAddress;
+
+    @FXML
+    private TextField txtId;
+
+    @FXML
+    private TextField txtName;
+
+    @FXML
+    private TextField txtSalary;
     private Alert wrongAlert = new Alert(Alert.AlertType.ERROR, "Something went wrong !");
 
     @Override
@@ -37,6 +54,7 @@ public class CustomerFormController implements Initializable {
             }
         });
     }
+
     public void btnAddAction() {
         if (new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait().isPresent()) {
             if (CustomerController.getInstance().addCustomer(
@@ -53,6 +71,7 @@ public class CustomerFormController implements Initializable {
             }
         }
     }
+
     public void btnUpdateAction() {
         if (CustomerController.getInstance().updateCustomer(
                 new Customer(
@@ -67,6 +86,7 @@ public class CustomerFormController implements Initializable {
             wrongAlert.show();
         }
     }
+
     public void txtSearch(ActionEvent actionEvent) {
         btnSearchAction(actionEvent);
     }
@@ -81,6 +101,7 @@ public class CustomerFormController implements Initializable {
             txtSalary.setText(String.valueOf(customer.getSalary()));
         }
     }
+
     public void btnDeleteAction() {
         if (new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Delete this customer?", ButtonType.YES, ButtonType.NO).showAndWait().isPresent()) {
             if (CustomerController.getInstance().deleteCustomer(txtId.getText())) {
@@ -92,24 +113,29 @@ public class CustomerFormController implements Initializable {
             }
         }
     }
+
     public void btnClearOnAction() {
         clear();
     }
+
     private void clear() {
         txtId.clear();
         txtName.clear();
         txtAddress.clear();
         txtSalary.clear();
     }
+
     private void loadTable() {
         fxTable.setItems(CustomerController.getInstance().getAllCustomer());
     }
+
     private void setTableValuesToTxt(Customer newValue) {
         txtId.setText(newValue.getId());
         txtName.setText(newValue.getName());
         txtAddress.setText(newValue.getAddress());
         txtSalary.setText(String.valueOf(newValue.getSalary()));
     }
+
     private void setCellValueFactory() {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
