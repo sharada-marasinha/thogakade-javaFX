@@ -2,6 +2,7 @@ package controller;
 
 import db.DBConnection;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -16,10 +17,17 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashRootController implements Initializable {
-    public Label lblCustomers;
-    public Label lblOrders;
-    public Label lblItems;
-    public LineChart lineChart;
+    @FXML
+    private Label lblCustomers;
+
+    @FXML
+    private Label lblItems;
+
+    @FXML
+    private Label lblOrders;
+
+    @FXML
+    private LineChart<?, ?> lineChart;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
