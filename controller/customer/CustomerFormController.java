@@ -42,6 +42,7 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     private TextField txtSalary;
+
     private Alert wrongAlert = new Alert(Alert.AlertType.ERROR, "Something went wrong !");
 
     @Override
@@ -54,7 +55,6 @@ public class CustomerFormController implements Initializable {
             }
         });
     }
-
     public void btnAddAction() {
         if (new Alert(Alert.AlertType.CONFIRMATION, "Do you want to add this customer?", ButtonType.YES, ButtonType.NO).showAndWait().isPresent()) {
             if (CustomerController.getInstance().addCustomer(
