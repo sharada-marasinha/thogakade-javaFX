@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.order.OrderDetailFormController">
+   <children>
+      <TableView layoutX="67.0" layoutY="105.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
+        <columns>
+          <TableColumn prefWidth="183.0" text="ID" />
+          <TableColumn prefWidth="273.0" text="Date" />
+            <TableColumn prefWidth="207.0" text="Customer ID" />
+        </columns>
+      </TableView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="76.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="804.0" />
+      <Label layoutX="331.0" layoutY="3.0" prefHeight="31.0" prefWidth="176.0" text="Orders" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="47.0" />
+         </font>
+      </Label>
+      <TableView layoutX="69.0" layoutY="357.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
+         <columns>
+            <TableColumn prefWidth="120.0" text="Order ID" />
+            <TableColumn prefWidth="208.0" text="Item Code" />
+            <TableColumn prefWidth="171.0" text="QTY" />
+            <TableColumn prefWidth="164.0" text="Unit Price" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

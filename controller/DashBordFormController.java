@@ -60,7 +60,6 @@ public class DashBordFormController implements Initializable {
         rootPane.getChildren().add(load);
     }
 
-
     public void lblOnActionDash() {
         loadDash();
     }

@@ -12,45 +12,45 @@
 <AnchorPane prefHeight="499.0" prefWidth="753.0" style="-fx-background-color: #c8d6e5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashBordFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="650.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="277.0" />
-      <Button fx:id="btnCustomer" layoutY="154.0" mnemonicParsing="false" onAction="#btnCustomerFormOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Customer" textFill="WHITE">
+      <Button fx:id="btnCustomer" layoutY="161.0" mnemonicParsing="false" onAction="#btnCustomerFormOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Customer" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="btnItem" layoutY="230.0" mnemonicParsing="false" onAction="#btnItemFormOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Item" textFill="WHITE">
+      <Button fx:id="btnItem" layoutY="237.0" mnemonicParsing="false" onAction="#btnItemFormOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Item" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Label layoutX="29.0" layoutY="28.0" onMousePressed="#lblOnActionDash" prefHeight="70.0" prefWidth="176.0" text="Thoga" textFill="WHITE">
+      <Label layoutX="29.0" layoutY="28.0" prefHeight="70.0" prefWidth="176.0" text="Thoga" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="47.0" />
          </font>
       </Label>
-      <Button fx:id="btnPlaceOrder" layoutY="308.0" mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Place Order" textFill="WHITE">
+      <Button fx:id="btnPlaceOrder" layoutY="315.0" mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Place Order" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
       <AnchorPane fx:id="rootPane" layoutX="276.0" prefHeight="650.0" prefWidth="800.0" />
-      <Button fx:id="btnExit" layoutY="465.0" mnemonicParsing="false" onAction="#btnExitOnAction" prefHeight="70.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Exit" textFill="WHITE">
+      <Button fx:id="btnExit" layoutY="472.0" mnemonicParsing="false" onAction="#btnExitOnAction" prefHeight="70.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Exit" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnAbout" layoutY="386.0" mnemonicParsing="false" onAction="#btnAboutOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="About App" textFill="WHITE">
+      <Button fx:id="btnAbout" layoutY="393.0" mnemonicParsing="false" onAction="#btnAboutOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="About App" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -67,5 +67,10 @@
             <Image url="@img/icons8-order-100.png" />
          </image>
       </ImageView>
+      <Button layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#lblOnActionDash" opacity="0.0" prefHeight="123.0" prefWidth="239.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

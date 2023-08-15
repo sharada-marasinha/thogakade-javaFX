@@ -3,12 +3,16 @@ package controller;
 import db.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +21,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashRootController implements Initializable {
+    public AnchorPane rootPane;
     @FXML
     private Label lblCustomers;
 
@@ -85,14 +90,37 @@ public class DashRootController implements Initializable {
     }
     DashBordFormController dashBordFormController=new DashBordFormController();
 
-    public void retCustomerOnAction(MouseEvent mouseEvent) {
-        //dashBordFormController.btnCustomerFormOnAction((ActionEvent) mouseEvent);
+    public void retCustomerOnAction(ActionEvent actionEvent) throws IOException {
+        URL resource = this.getClass().getResource("/view/customer-Form.fxml");
+
+        assert resource != null;
+
+        Parent load =  FXMLLoader.load(resource);
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(load);
     }
 
     public void retOrderOnAction(MouseEvent mouseEvent) {
     }
 
-    public void retInvantoryOnAction(MouseEvent mouseEvent) {
+    public void retInventoryOnAction(ActionEvent mouseEvent) throws IOException {
+        URL resource = this.getClass().getResource("/view/item-Form.fxml");
+
+        assert resource != null;
+
+        Parent load =  FXMLLoader.load(resource);
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(load);
+    }
+
+    public void orderOnAction(ActionEvent actionEvent) throws IOException {
+        URL resource = this.getClass().getResource("/view/order-detail-form.fxml");
+
+        assert resource != null;
+
+        Parent load =  FXMLLoader.load(resource);
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(load);
     }
 }
 
