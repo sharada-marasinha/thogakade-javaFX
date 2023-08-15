@@ -14,6 +14,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,25 +32,63 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaceOrderFormController implements Initializable {
-    public Label lblDate;
-    public Label lblTime;
-    public ComboBox<String> cmbCustomerIds;
-    public ComboBox<String> cmdItemCode;
-    public TextField txtName;
-    public TextField txtAddress;
-    public TextField txtSalary;
-    public TextField txtDesc;
-    public TextField txtQty;
-    public TextField txtUnitPrice;
-    public TableView<CartTm> tblCart;
-    public TableColumn <CartTm, String> colCode;
-    public TableColumn <CartTm, String> colDesc;
-    public TableColumn <CartTm, Integer>  colQty;
-    public TableColumn <CartTm, Double> colUnitPrice;
-    public TableColumn <CartTm, Double> colTotal;
-    public TextField txtQtyOnNow;
-    public Label lblTtl;
-    public Label lblOrderId;
+
+    @FXML
+    private ComboBox<String> cmbCustomerIds;
+
+    @FXML
+    private ComboBox<String> cmdItemCode;
+
+    @FXML
+    private TableColumn<CartTm, String> colCode;
+
+    @FXML
+    private TableColumn<CartTm, String> colDesc;
+
+    @FXML
+    private TableColumn<CartTm, Integer> colQty;
+
+    @FXML
+    private TableColumn<CartTm, Double> colTotal;
+
+    @FXML
+    private TableColumn<CartTm, Double> colUnitPrice;
+
+    @FXML
+    private Label lblDate;
+
+    @FXML
+    private Label lblOrderId;
+
+    @FXML
+    private Label lblTime;
+
+    @FXML
+    private Label lblTtl;
+
+    @FXML
+    private TableView<CartTm> tblCart;
+
+    @FXML
+    private TextField txtAddress;
+
+    @FXML
+    private TextField txtDesc;
+
+    @FXML
+    private TextField txtName;
+
+    @FXML
+    private TextField txtQty;
+
+    @FXML
+    private TextField txtQtyOnNow;
+
+    @FXML
+    private TextField txtSalary;
+
+    @FXML
+    private TextField txtUnitPrice;
 
     private int cartSelectedRowForRemove = -1;
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
