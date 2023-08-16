@@ -10,11 +10,11 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.order.OrderDetailFormController">
    <children>
-      <TableView layoutX="67.0" layoutY="105.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
+      <TableView fx:id="tblOrders" layoutX="67.0" layoutY="105.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
         <columns>
-          <TableColumn prefWidth="183.0" text="ID" />
-          <TableColumn prefWidth="273.0" text="Date" />
-            <TableColumn prefWidth="207.0" text="Customer ID" />
+          <TableColumn fx:id="colId" prefWidth="183.0" text="ID" />
+          <TableColumn fx:id="colDate" prefWidth="273.0" text="Date" />
+            <TableColumn fx:id="colCustomerId" prefWidth="207.0" text="Customer ID" />
         </columns>
       </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="76.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="804.0" />
@@ -23,12 +23,12 @@
             <Font name="Arial Black" size="47.0" />
          </font>
       </Label>
-      <TableView layoutX="69.0" layoutY="357.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
+      <TableView fx:id="tblOrderDetails" layoutX="69.0" layoutY="357.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
          <columns>
-            <TableColumn prefWidth="120.0" text="Order ID" />
-            <TableColumn prefWidth="208.0" text="Item Code" />
-            <TableColumn prefWidth="171.0" text="QTY" />
-            <TableColumn prefWidth="164.0" text="Unit Price" />
+            <TableColumn fx:id="colOrderId" prefWidth="120.0" text="Order ID" />
+            <TableColumn fx:id="colItemCode" prefWidth="208.0" text="Item Code" />
+            <TableColumn fx:id="colQty" prefWidth="171.0" text="QTY" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="164.0" text="Unit Price" />
          </columns>
       </TableView>
    </children>
