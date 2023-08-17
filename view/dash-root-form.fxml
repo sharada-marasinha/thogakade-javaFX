@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashRootController">
+<AnchorPane fx:id="rootPane" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dash.DashRootController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="76.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="804.0" />
       <Label layoutX="274.0" layoutY="2.0" prefHeight="73.0" prefWidth="270.0" text="Dashbord" textFill="WHITE">
@@ -27,17 +27,6 @@
          </cursor></Rectangle>
       <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#192a56" height="140.0" layoutX="323.0" layoutY="114.0" onDragDetected="#retOrderOnAction" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="158.0" />
       <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#192a56" height="140.0" layoutX="571.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="158.0" />
-      <LineChart fx:id="lineChart" layoutX="104.0" layoutY="302.0" prefHeight="293.0" prefWidth="586.0">
-        <xAxis>
-          <CategoryAxis endMargin="500.0" side="BOTTOM" startMargin="500.0" tickLength="10.0" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis minorTickCount="1" side="LEFT" tickLength="10.0" upperBound="500.0">
-               <tickLabelFont>
-                  <Font size="11.0" />
-               </tickLabelFont></NumberAxis>
-        </yAxis>
-      </LineChart>
       <Label contentDisplay="RIGHT" layoutX="96.0" layoutY="211.0" text="Customers" textFill="WHITE">
          <font>
             <Font size="17.0" />
@@ -107,5 +96,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <BarChart fx:id="barChart" layoutX="89.0" layoutY="300.0" prefHeight="325.0" prefWidth="629.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
    </children>
 </AnchorPane>

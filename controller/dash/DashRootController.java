@@ -1,4 +1,4 @@
-package controller;
+package controller.dash;
 
 import db.DBConnection;
 import javafx.event.ActionEvent;
@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class DashRootController implements Initializable {
     public AnchorPane rootPane;
+    public BarChart barChart;
     @FXML
     private Label lblCustomers;
 
@@ -37,20 +39,20 @@ public class DashRootController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadValuesToLabel();
-        XYChart.Series orderSeries = new XYChart.Series();
-        orderSeries.setName("Average Order Value");
-        orderSeries.getData().add(new XYChart.Data("1", 5));
-        orderSeries.getData().add(new XYChart.Data("2", 6));
-        orderSeries.getData().add(new XYChart.Data("3", 7));
+        loadChart();
+    }
 
-        XYChart.Series customerSeries = new XYChart.Series();
-        customerSeries.setName("Average Customers");
-        customerSeries.getData().add(new XYChart.Data("1", 2));
-        customerSeries.getData().add(new XYChart.Data("3", 6));
-        customerSeries.getData().add(new XYChart.Data("5", 10));
-
-        lineChart.getData().addAll(orderSeries,customerSeries);
-
+    private void loadChart(){
+        XYChart.Series<String,Integer> se1=new XYChart.Series<>();
+        se1.setName("Order");
+        se1.getData().add(new XYChart.Data<>("January",2323));
+        se1.getData().add(new XYChart.Data<>("February",4333));
+        se1.getData().add(new XYChart.Data<>("March",10000));
+        se1.getData().add(new XYChart.Data<>("April",350000));
+        se1.getData().add(new XYChart.Data<>("May",435000));
+        se1.getData().add(new XYChart.Data<>("June",21000));
+        se1.getData().add(new XYChart.Data<>("Jule",78000));
+        barChart.getData().add(se1);
     }
 
     public void loadValuesToLabel(){

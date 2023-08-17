@@ -1,4 +1,4 @@
-package controller;
+package controller.dash;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

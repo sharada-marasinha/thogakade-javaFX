@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="499.0" prefWidth="753.0" style="-fx-background-color: #c8d6e5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashBordFormController">
+<AnchorPane prefHeight="499.0" prefWidth="753.0" style="-fx-background-color: #c8d6e5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dash.DashBordFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="650.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="277.0" />
       <Button fx:id="btnCustomer" layoutY="161.0" mnemonicParsing="false" onAction="#btnCustomerFormOnAction" prefHeight="78.0" prefWidth="271.0" style="-fx-background-color: #192a56;" text="Customer" textFill="WHITE">

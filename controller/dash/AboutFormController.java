@@ -1,4 +1,4 @@
-package controller;
+package controller.dash;
 
 public class AboutFormController {
 }
