@@ -4,6 +4,9 @@ import db.DBConnection;
 import dto.OrderDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import view.tm.OrderDetailTm;
 import view.tm.OrderTm;
 
@@ -15,6 +18,7 @@ import java.util.List;
 
 
 public class OrderDetailController {
+    public static ObservableList<OrderTm> orderDataL;
     private OrderDetailController() {
     }
 
@@ -40,11 +44,19 @@ public class OrderDetailController {
     }
     public static ObservableList<OrderTm> loadTableDataOrders(){
         ObservableList<OrderTm> orderDataList= FXCollections.observableArrayList();
-        String SQL = "SELECT * FROM Orders";
+        String sql = "SELECT * FROM Orders";
         try {
-            ResultSet rst = DBConnection.getInstance().getConnection().prepareStatement(SQL).executeQuery();
+            ResultSet rst = DBConnection.getInstance().getConnection().prepareStatement(sql).executeQuery();
             while (rst.next()){
-                orderDataList.add(new OrderTm(rst.getString(1),rst.getString(2),rst.getString(3)));
+                Button btn = new Button("Cancel");
+                btn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+
+                    }
+                });
+                orderDataList.add(new OrderTm(rst.getString(1),rst.getString(2),rst.getString(3),btn));
             }
             return orderDataList;
         } catch (SQLException | ClassNotFoundException e) {
@@ -54,10 +66,11 @@ public class OrderDetailController {
     }
 
     public static ObservableList<OrderDetailTm> searchOrderDetail(String id) {
-        String SQL = "SELECT *FROM orders INNER JOIN orderdetail ON orders.id = orderdetail.orderId inner join item on item.code=orderdetail.itemcode WHERE orderdetail.orderId='"+id+"'";
+
+        String sql = "SELECT *FROM orders INNER JOIN orderdetail ON orders.id = orderdetail.orderId inner join item on item.code=orderdetail.itemcode WHERE orderdetail.orderId='"+id+"'";
         ObservableList<OrderDetailTm> orderDetailList = FXCollections.observableArrayList();
         try {
-            ResultSet rst = DBConnection.getInstance().getConnection().prepareStatement(SQL).executeQuery();
+            ResultSet rst = DBConnection.getInstance().getConnection().prepareStatement(sql).executeQuery();
             while(rst.next()){
                 orderDetailList.add(new OrderDetailTm(rst.getString(1),rst.getString(5),rst.getInt(6),rst.getDouble(10)));
             }
@@ -66,6 +79,6 @@ public class OrderDetailController {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return orderDetailList;
     }
 }

@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.order.OrderDetailFormController">
    <children>
-      <TableView fx:id="tblOrders" layoutX="67.0" layoutY="105.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
+      <Pane layoutY="-1.0" prefHeight="650.0" prefWidth="804.0" style="-fx-background-color: white;" />
+      <TableView fx:id="tblOrders" layoutX="67.0" layoutY="91.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
         <columns>
           <TableColumn fx:id="colId" prefWidth="183.0" text="ID" />
-          <TableColumn fx:id="colDate" prefWidth="273.0" text="Date" />
-            <TableColumn fx:id="colCustomerId" prefWidth="207.0" text="Customer ID" />
+          <TableColumn fx:id="colDate" prefWidth="204.0" text="Date" />
+            <TableColumn fx:id="colCustomerId" prefWidth="182.0" text="Customer ID" />
+            <TableColumn fx:id="button" prefWidth="94.0" />
         </columns>
       </TableView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="76.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="804.0" />
-      <Label layoutX="331.0" layoutY="3.0" prefHeight="31.0" prefWidth="176.0" text="Orders" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a56" height="66.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="804.0" />
+      <Label layoutX="328.0" layoutY="2.0" prefHeight="59.0" prefWidth="149.0" text="Orders" textFill="WHITE">
          <font>
-            <Font name="Arial Black" size="47.0" />
+            <Font name="Arial Black" size="40.0" />
          </font>
       </Label>
-      <TableView fx:id="tblOrderDetails" layoutX="69.0" layoutY="357.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
+      <TableView fx:id="tblOrderDetails" layoutX="68.0" layoutY="347.0" prefHeight="226.0" prefWidth="664.0" stylesheets="@css/Table.css">
          <columns>
             <TableColumn fx:id="colOrderId" prefWidth="120.0" text="Order ID" />
             <TableColumn fx:id="colItemCode" prefWidth="208.0" text="Item Code" />
@@ -31,5 +35,8 @@
             <TableColumn fx:id="colUnitPrice" prefWidth="164.0" text="Unit Price" />
          </columns>
       </TableView>
+      <Separator layoutX="104.0" layoutY="331.0" prefHeight="2.0" prefWidth="580.0" />
+      <Button layoutX="586.0" layoutY="598.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="Button" />
+      <Button layoutX="476.0" layoutY="599.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="Button" />
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package controller.customer;
 
+import crudUtil.CrudUtil;
 import db.DBConnection;
 import dto.Customer;
 import javafx.collections.FXCollections;
@@ -22,12 +23,7 @@ public class CustomerController implements CustomerService {
     public boolean addCustomer(Customer customer) {
         try {
             String SQL = "Insert into Customer Values(?,?,?,?)";
-            PreparedStatement psTm =DBConnection.getInstance().getConnection().prepareStatement(SQL);
-            psTm.setObject(1, customer.getId());
-            psTm.setObject(2, customer.getName());
-            psTm.setObject(3, customer.getAddress());
-            psTm.setObject(4, customer.getSalary());
-            return psTm.executeUpdate()>0;
+            CrudUtil.execute(SQL,customer);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();

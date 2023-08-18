@@ -1,13 +1,11 @@
 package controller.dash;
 
 import db.DBConnection;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -33,8 +31,6 @@ public class DashRootController implements Initializable {
     @FXML
     private Label lblOrders;
 
-    @FXML
-    private LineChart<?, ?> lineChart;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -92,7 +88,7 @@ public class DashRootController implements Initializable {
     }
     DashBordFormController dashBordFormController=new DashBordFormController();
 
-    public void retCustomerOnAction(ActionEvent actionEvent) throws IOException {
+    public void retCustomerOnAction() throws IOException {
         URL resource = this.getClass().getResource("/view/customer-Form.fxml");
 
         assert resource != null;
@@ -105,7 +101,7 @@ public class DashRootController implements Initializable {
     public void retOrderOnAction(MouseEvent mouseEvent) {
     }
 
-    public void retInventoryOnAction(ActionEvent mouseEvent) throws IOException {
+    public void retInventoryOnAction() throws IOException {
         URL resource = this.getClass().getResource("/view/item-Form.fxml");
 
         assert resource != null;
@@ -115,7 +111,7 @@ public class DashRootController implements Initializable {
         rootPane.getChildren().add(load);
     }
 
-    public void orderOnAction(ActionEvent actionEvent) throws IOException {
+    public void orderOnAction() throws IOException {
         URL resource = this.getClass().getResource("/view/order-detail-form.fxml");
 
         assert resource != null;

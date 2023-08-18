@@ -14,6 +14,7 @@ import java.util.*;
 
 public class OrderDetailFormController implements Initializable {
 
+    public TableColumn button;
     @FXML
     private TableColumn<OrderTm,String> colCustomerId;
 
@@ -46,6 +47,7 @@ public class OrderDetailFormController implements Initializable {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        button.setCellValueFactory(new PropertyValueFactory<>("button"));
 
         loadTable();
         /*-----------------------------------------------------------------------------------*/
