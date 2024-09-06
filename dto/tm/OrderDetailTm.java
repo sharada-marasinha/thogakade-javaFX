@@ -1,4 +1,4 @@
-package view.tm;
+package dto.tm;
 
 public class OrderDetailTm {
     private String oId;

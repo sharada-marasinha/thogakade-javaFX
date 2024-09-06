@@ -6,8 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import view.tm.OrderDetailTm;
-import view.tm.OrderTm;
+import dto.tm.OrderDetailTm;
+import dto.tm.OrderTm;
 
 import java.net.URL;
 import java.util.*;

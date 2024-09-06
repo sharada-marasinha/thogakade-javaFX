@@ -7,8 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import view.tm.OrderDetailTm;
-import view.tm.OrderTm;
+import dto.tm.OrderDetailTm;
+import dto.tm.OrderTm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

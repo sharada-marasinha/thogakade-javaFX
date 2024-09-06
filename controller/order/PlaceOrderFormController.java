@@ -19,7 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-import view.tm.CartTm;
+import dto.tm.CartTm;
 
 import java.net.URL;
 import java.sql.ResultSet;
